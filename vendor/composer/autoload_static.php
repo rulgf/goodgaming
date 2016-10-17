@@ -23,6 +23,10 @@ class ComposerStaticInitac7a2e2db5891eff6f8ac7f923d02c50
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Translation\\' => 30,
         ),
+        'R' => 
+        array (
+            'Respect\\Validation\\' => 19,
+        ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
@@ -62,6 +66,10 @@ class ComposerStaticInitac7a2e2db5891eff6f8ac7f923d02c50
         'Symfony\\Component\\Translation\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
+        ),
+        'Respect\\Validation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/respect/validation/library',
         ),
         'Psr\\Http\\Message\\' => 
         array (

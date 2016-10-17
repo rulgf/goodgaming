@@ -2,6 +2,7 @@
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator as v;
 
 class HomeController extends Controller{
 
@@ -17,11 +18,21 @@ class HomeController extends Controller{
             'email' => $email
         ]);
     }
+
     public function hola(ServerRequestInterface $request, ResponseInterface $response, array $args){
         $userId = $args['content'];
         $requestBody = json_decode($request->getBody(), true);
 
         // possibly update a record in the database with the request body
+        $number = 'hola';
+        $validator=v::numeric()->validate($number); // true
+
+        /*if($validator){
+            return 'pase';
+        }else{
+            return 'no pase';
+        }*/
+
 
         $response->getBody()->write('Updated User with ID: ' . $userId);
 

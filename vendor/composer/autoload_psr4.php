@@ -9,6 +9,7 @@ return array(
     'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
+    'Respect\\Validation\\' => array($vendorDir . '/respect/validation/library'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'League\\Route\\' => array($vendorDir . '/league/route/src'),
     'League\\Container\\' => array($vendorDir . '/league/container/src'),

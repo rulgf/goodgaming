@@ -3,7 +3,8 @@
     "require": {
         "illuminate/database": "^5.2",
         "zendframework/zend-diactoros": "^1.3",
-        "league/route": "^2.0"
+        "league/route": "^2.0",
+        "respect/validation": "^1.1"
     },
     "autoload":{
         "classmap": [

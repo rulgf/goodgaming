@@ -3,6 +3,11 @@
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+//Requires all controllers files
+require_once('controllers/home.php');
+
+//
+//Listen URL's
 $container = new League\Container\Container;
 
 $container->share('response', Zend\Diactoros\Response::class);
@@ -17,14 +22,10 @@ $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
 
 $route = new League\Route\RouteCollection;
 
-/*$route->map('GET', '/', function (ServerRequestInterface $request, ResponseInterface $response) {
-    $response->getBody()->write('<h1>Hello, World!</h1>');
-
-    return $response;
-});*/
-
-$route->get('/', 'HomeController::index');
-//$route->map('GET', '/', [new HomeController(), 'someMethod']);
+/*
+ * Map of the request
+ */
+$route->get('/{content}', 'HomeController::hola');
 
 $response = $route->dispatch($container->get('request'), $container->get('response'));
 

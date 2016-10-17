@@ -2,7 +2,7 @@
 
 class App{
 
-    protected $controller = 'home';
+    /*protected $controller = 'home';
 
     protected $method = 'index';
 
@@ -36,5 +36,5 @@ class App{
         if(isset($_GET['url'])){
             return $url =explode('/' ,filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
         }
-    }
+    }*/
 }

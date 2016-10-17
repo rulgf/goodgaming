@@ -1,5 +1,9 @@
 <?php
 
-class User{
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
+class User extends Eloquent{
     public $name;
+
+    protected $fillable = ['name', 'email', 'password', 'age', 'city', 'country'];
 }

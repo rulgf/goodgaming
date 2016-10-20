@@ -5,6 +5,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 //Requires all controllers files
 require_once('controllers/home.php');
+require_once('controllers/gamesController.php');
 
 //
 //Listen URL's
@@ -22,10 +23,18 @@ $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
 
 $route = new League\Route\RouteCollection;
 
+$route->setStrategy(new League\Route\Strategy\ParamStrategy);
+
 /*
  * Map of the request
  */
-$route->get('/{content}', 'HomeController::hola');
+$route->get('/', 'HomeController::hola');
+
+//Games Routes
+$route->get('/games', 'gamesController::getLastGames');
+$route->get('/allgames', 'gamesController::getAllGames');
+
+$route->get('/game/{id}', 'gamesController::getGame');
 
 $response = $route->dispatch($container->get('request'), $container->get('response'));
 

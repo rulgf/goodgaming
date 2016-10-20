@@ -15,4 +15,8 @@ $capsule->addConnection([
     'prefix' => '',
 ]);
 
+$capsule->setAsGlobal();
+
 $capsule->bootEloquent();
+
+date_default_timezone_set('UTC');

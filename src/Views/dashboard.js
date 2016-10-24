@@ -16,13 +16,13 @@ const styles = {
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'space-around',
+        justifyContent: 'space-around'
     },
     gridList: {
         display: 'flex',
         flexWrap: 'nowrap',
-        overflowX: 'auto',
-    },
+        overflowX: 'auto'
+    }
 };
 
 export default class Dashboard extends Component{

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Lists.php');
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Gender.php');
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Platform.php');
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Reviews.php');
@@ -12,10 +11,6 @@ class Games extends Eloquent{
 
     public function genders(){
         return $this->belongsToMany('Gender','games_genders', 'game_id', 'gender_id');
-    }
-
-    public function lists(){
-        return $this->belongsToMany('Lists','lists_games', 'list_id', 'game_id');
     }
 
     public function platforms(){

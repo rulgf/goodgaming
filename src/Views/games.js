@@ -103,7 +103,7 @@ export default class Games extends Component{
                 <h1>Como cuando eres un vista de juegos</h1>
                 <h2>zoi la bizta d juegoz xdxdxdxdxdxdxdxdxdxd</h2>
                 <BootstrapTable data={this.state.games}
-                                options={{ noDataText :"No se encontraron resultados"}}
+                                options={{ noDataText :"No games found"}}
                                 pagination={true}
                                 hover={true}
                                 search={true}>

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Router, Route, hashHistory, IndexRoute} from 'react-router';
 
-//Vistas
+//Views
 import Dashboard from './Views/dashboard';
 import Layout from './Components/layout';
-import Games from './Views/games'
+import Games from './Views/games';
+import Game from './Views/game';
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
             <Route path="/" component={Layout}>
                 <IndexRoute component={Dashboard} />
                 <Route path="games" component={Games}/>
+                <Route path="game/:gameId" component={Game}/>
             </Route>
         </Router>
     );

@@ -100,8 +100,7 @@ export default class Games extends Component{
 
         return(
             <div className="col-md-12">
-                <h1>Como cuando eres un vista de juegos</h1>
-                <h2>zoi la bizta d juegoz xdxdxdxdxdxdxdxdxdxd</h2>
+                <h1>All Games</h1>
                 <BootstrapTable data={this.state.games}
                                 options={{ noDataText :"No games found"}}
                                 pagination={true}

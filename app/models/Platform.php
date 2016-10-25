@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Games.php');
-
 class Platform extends Eloquent{
     protected $table = 'platforms';
 

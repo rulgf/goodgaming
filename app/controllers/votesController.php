@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Upvotes.php');
 
-class gamesController extends Illuminate\Routing\Controller{
+session_start();
 
-    public function upvote($game_id){
+class votesController extends Illuminate\Routing\Controller{
+
+    public function upvote($review_id){
 
         $request = $_REQUEST;
 
@@ -16,7 +18,7 @@ class gamesController extends Illuminate\Routing\Controller{
             $username = $_SESSION['USER'];
             $user=User::where('name', $username)->get()->first();
 
-            $vote = Upvotes::where('game_id', $game_id)->where('user_id', $user->id)->get()->first();
+            $vote = Upvotes::where('review_id', $review_id)->where('user_id', $user->id)->first();
 
             if($vote){
                 $vote->value = $request['value'];
@@ -26,7 +28,7 @@ class gamesController extends Illuminate\Routing\Controller{
                     'success' => true
                 ));
             }else{
-                $vote = Upvotes::store($request, $user->id);
+                $vote = Upvotes::store($request, $user->id, $review_id);
 
                 return json_encode(array(
                     'success' => true
@@ -35,7 +37,7 @@ class gamesController extends Illuminate\Routing\Controller{
         }else{
             return json_encode(array(
                 'error' => array(
-                    'msg' => 'Not Logged in',
+                    'msg' => 'You need to be logged in the system',
                     'code' => '200',
                 ),
             ));

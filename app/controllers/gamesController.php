@@ -39,16 +39,21 @@ class gamesController extends Illuminate\Routing\Controller{
     }
 
     public function getUserReview($id){
-        /*if(isset($_SESSION['USER'])){
+        if(isset($_SESSION['USER'])){
             $username = $_SESSION['USER'];
             $user=User::where('name', $username)->get()->first();
 
-            $reviews= Reviews::where('user_id', $user->id)->where('game_id', $id)->with('countUpvotes')->with('countDownvotes')->get();
+            $reviews= Reviews::where('user_id', $user->id)->where('game_id', $id)->with('countUpvotes')->with('countDownvotes')->get()->first();
             return $reviews;
         }else{
-            return response()->json(['success' => false, 'errors' => ['The user has no review']]);
-        }*/
-            $username = 'rul';
+            return json_encode(array(
+                'error' => array(
+                    'msg' => 'No review found for the user',
+                    'code' => '200',
+                ),
+            ));
+        }
+            /*$username = 'rul';
             $user=User::where('name', $username)->get()->first();
 
             $review= Reviews::where('user_id', $user->id)->where('game_id', $id)->with('countUpvotes')->with('countDownvotes')->get()->first();
@@ -63,6 +68,6 @@ class gamesController extends Illuminate\Routing\Controller{
                         'code' => '200',
                     ),
                 ));
-            }
+            }*/
     }
 }

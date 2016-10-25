@@ -3,9 +3,6 @@
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Http\Request;
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Upvotes.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Reviews.php');
-
 class User extends Eloquent{
 
     protected $fillable = ['name', 'email', 'password'];

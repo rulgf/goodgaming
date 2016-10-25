@@ -2,9 +2,6 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/User.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Reviews.php');
-
 class Upvotes extends Eloquent{
     protected $table = 'upvotes';
 
@@ -12,10 +9,10 @@ class Upvotes extends Eloquent{
         'user_id', 'review_id', 'value'
     ];
 
-    public static function store($request, $user_id){
+    public static function store($request, $user_id, $review_id){
         $vote = new Upvotes();
         $vote->user_id = $user_id;
-        $vote->review_id = $request['review_id'];
+        $vote->review_id = $review_id;
         $vote->value = $request['value'];
         if($vote->save()){
             return $vote;

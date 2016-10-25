@@ -91,8 +91,7 @@ export default class Dashboard extends Component{
     render() {
         return(
             <div className="col-md-12">
-                <h1>Como cuando eres un dashboard</h1>
-                <h2>zoi el dachbord xdxdxdxdxdxdxdxdxdxd</h2>
+                <h1>Last Games</h1>
                 {this.gridList()}
             </div>
         );

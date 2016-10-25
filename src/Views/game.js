@@ -11,6 +11,7 @@ import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import $ from 'jquery';
 
@@ -33,6 +34,8 @@ export default class Game extends Component{
             reviews: [],
 
             //myReview
+            errors: [],
+            erroropen: false,
             boolreview: false,
             title: '',
             description: '',
@@ -50,7 +53,30 @@ export default class Game extends Component{
         this.loadUserReview();
     }
 
-    //Obtain last games
+    /*
+    Input Handlers
+     */
+    handleTitle(e){
+        this.setState({
+            title: e.target.value
+        });
+    }
+
+    handleRate(e){
+        this.setState({
+            rate: e.target.value
+        });
+    }
+
+    handleDescription(e){
+        this.setState({
+            description: e.target.value
+        });
+    }
+
+    /*
+    Obtain game info
+     */
     loadGame(){
         $.ajax({
             type: 'GET',
@@ -93,7 +119,9 @@ export default class Game extends Component{
             }
         });
     }
-
+    /*
+     Obtain last reviews
+     */
     loadReviews(){
         $.ajax({
             type: 'GET',
@@ -136,6 +164,9 @@ export default class Game extends Component{
         });
     }
 
+    /*
+     Obtain user review
+     */
     loadUserReview(){
         $.ajax({
             type: 'GET',
@@ -175,6 +206,10 @@ export default class Game extends Component{
         });
     }
 
+
+    /*
+     Render game info of table
+     */
     titleTable(e, row){
         return(
             <div className="col-md-12">
@@ -182,6 +217,44 @@ export default class Game extends Component{
                 <span>{e[1]}</span>
             </div>
         );
+    }
+
+    /*
+     Send Review
+     */
+    writeReview(){
+        $.ajax({
+            type: 'POST',
+            url: url + 'writereview/' + this.props.params.gameId,
+            context: this,
+            dataType: 'json',
+            cache: false,
+            data: {
+                title: this.state.title,
+                description: this.state.description,
+                rate: this.state.rate,
+            },
+            success: function (data) {
+                if(data.error){
+                    //Si hay errores guardarlos
+                    this.setState({errors: [data.error.msg]}, function(){
+                        this.setState({erroropen: true});
+                    });
+                }else{
+                    //Guardo el usuario logeado
+                    this.loadUserReview();
+                    this.setState({
+                        title: '',
+                        description: '',
+                        rate: 0,
+                    });
+                }
+            }.bind(this),
+            error: function (xhr, status, err) {
+                //Error
+                console.error(this.props.url, status, err.toString());
+            }
+        });
     }
 
     //Upvote and Downvote button
@@ -216,12 +289,45 @@ export default class Game extends Component{
         );
     }
 
+
     handleUpvotes(id){
-        console.log('Upvote for: ' + id);
+        this.vote(id, 1);
     }
 
     handleDownvotes(id){
-        console.log('Downvote for: ' + id);
+        this.vote(id, 0);
+    }
+
+    handleCloseError(){
+        this.setState({erroropen: false});
+    }
+
+    vote(id, value){
+        $.ajax({
+            type: 'POST',
+            url: url + 'upvote/' + id,
+            context: this,
+            dataType: 'json',
+            cache: false,
+            data: {
+                value: value,
+            },
+            success: function (data) {
+                if(data.error){
+                    //Si hay errores guardarlos
+                    this.setState({errors: [data.error.msg]}, function(){
+                        this.setState({erroropen: true});
+                    });
+                }else{
+                    //Guardo el usuario logeado
+                    this.loadReviews();
+                }
+            }.bind(this),
+            error: function (xhr, status, err) {
+                //Error
+                console.error(this.props.url, status, err.toString());
+            }
+        });
     }
 
     render() {
@@ -269,17 +375,20 @@ export default class Game extends Component{
                         hintText="Title"
                         floatingLabelText="Title"
                         type="text"
+                        onChange={this.handleTitle.bind(this)}
                     />
                     <TextField
                         hintText="Rate"
                         floatingLabelText="Rate(0-10)"
                         type="number"
+                        onChange={this.handleRate.bind(this)}
                     />
                     <TextField
                         hintText="Your Review"
                         floatingLabelText="Your Review"
                         type="text"
                         fullWidth={true}
+                        onChange={this.handleDescription.bind(this)}
                     />
                 </CardText>,
                 <CardActions>
@@ -287,6 +396,7 @@ export default class Game extends Component{
                         label="Send Review"
                         primary={true}
                         keyboardFocused={true}
+                        onTouchTap={this.writeReview.bind(this)}
                     />,
                 </CardActions>
             ];
@@ -321,6 +431,12 @@ export default class Game extends Component{
                         <TableHeaderColumn dataField="title" dataFormat={this.titleTable.bind(this)} >Review</TableHeaderColumn>
                         <TableHeaderColumn dataField="routes" dataFormat={this.voteButton.bind(this)} >Votes</TableHeaderColumn>
                     </BootstrapTable>
+                    <Snackbar
+                        open={this.state.erroropen}
+                        message={this.state.errors[0]}
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleCloseError.bind(this)}
+                    />
                 </div>
             </div>
         );

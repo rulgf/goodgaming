@@ -2,10 +2,10 @@
 
 use Respect\Validation\Validator as v;
 
-use Illuminate\Http\Request;
-
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Games.php');
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/goodgaming/app/models/Reviews.php');
+
+session_start();
 
 class reviewsController extends Illuminate\Routing\Controller{
     public function writeReview($id){
@@ -15,7 +15,7 @@ class reviewsController extends Illuminate\Routing\Controller{
             $username = $_SESSION['USER'];
             $user=User::where('name', $username)->get()->first();
 
-            $rateVal = v::email()->validate($request['email']);
+            $rateVal = v::numeric()->length(1, 10)->validate($request['rate']);
 
             if($rateVal){
                 if($request['title']){
@@ -55,7 +55,7 @@ class reviewsController extends Illuminate\Routing\Controller{
             }else{
                 return json_encode(array(
                     'error' => array(
-                        'msg' => 'The rate is missing',
+                        'msg' => 'The rate must be a value between 1-10',
                         'code' => '200',
                     ),
                 ));
@@ -63,7 +63,7 @@ class reviewsController extends Illuminate\Routing\Controller{
         }else{
             return json_encode(array(
                 'error' => array(
-                    'msg' => 'No user logged in',
+                    'msg' => 'You need to be logged in the system',
                     'code' => '200',
                 ),
             ));

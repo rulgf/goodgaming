@@ -100,13 +100,21 @@ class userController extends Illuminate\Routing\Controller{
 
     public function signout(){
         session_destroy();
+        return json_encode(array(
+            'success' => true
+        ));
     }
 
     public function getUser()
     {
         //Valido la sesion
         if(isset($_SESSION['USER'])){
-            return $_SESSION['USER'];
+            return json_encode(array(
+                'user' => array(
+                    'name' => $_SESSION['USER'],
+                    'code' => '200',
+                ),
+            ));
         }else{
             return json_encode(array(
                 'error' => array(

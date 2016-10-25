@@ -54,7 +54,7 @@ export default class Layout extends Component{
                     this.setState({errors: data.error.msg});
                 }else{
                     //Guardo el usuario logeado
-                    this.setState({username: data}, function(){
+                    this.setState({username: data.user.name}, function(){
                         console.log("user: " + this.state.username);
                     });
                 }
@@ -70,8 +70,7 @@ export default class Layout extends Component{
         if(this.state.username !== ''){
             return(
                 <NavDropdown eventKey={3} title={this.state.username} id="basic-nav-dropdown">
-                    <MenuItem eventKey={3.1}>My info</MenuItem>
-                    <MenuItem eventKey={3.2}>Logout</MenuItem>
+                    <MenuItem eventKey={3.2} onClick={this.logout.bind(this)}>Logout</MenuItem>
                 </NavDropdown>
             );
         }else{
@@ -200,6 +199,35 @@ export default class Layout extends Component{
                         email: '',
                         password: '',
                         confirmpass: ''
+                    });
+                }
+            }.bind(this),
+            error: function (xhr, status, err) {
+                //Error
+                console.error(this.props.url, status, err.toString());
+            }
+        });
+    }
+
+    logout(){
+        $.ajax({
+            type: 'GET',
+            url: url + 'logout',
+            context: this,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                if(data.error){
+                    //Si hay errores guardarlos
+                    this.setState({errors: [data.error.msg]}, function(){
+                        this.setState({erroropen: true});
+                    });
+                }else{
+                    //Guardo el usuario logeado
+                    this.setState({
+                        username: ''
+                    }, function () {
+                        this.loadUser();
                     });
                 }
             }.bind(this),
